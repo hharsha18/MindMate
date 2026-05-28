@@ -37,17 +37,17 @@ body {
     color: white;
 }
 
-/* LIGHT MODE */
+/* LIGHT THEME */
 
 body.light {
 
     background:
     linear-gradient(
-        rgba(180,210,255,0.28),
-        rgba(210,230,255,0.32)
+        rgba(235,245,255,0.18),
+        rgba(220,235,255,0.22)
     ),
 
-    url("https://images.unsplash.com/photo-1506744038136-46273834b3fb?q=80&w=2070&auto=format&fit=crop");
+    url("https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?q=80&w=2070&auto=format&fit=crop");
 
     background-size: cover;
 
@@ -66,7 +66,7 @@ body.light {
     height: 92vh;
 
     background:
-    rgba(8,18,35,0.82);
+    rgba(8,18,35,0.78);
 
     border:
     1px solid rgba(255,255,255,0.08);
@@ -90,17 +90,17 @@ body.light {
 body.light .chat-container {
 
     background:
-    rgba(255,255,255,0.20);
+    rgba(255,255,255,0.16);
 
     color: #111;
 
     backdrop-filter: blur(10px);
 
     border:
-    1px solid rgba(255,255,255,0.18);
+    1px solid rgba(255,255,255,0.22);
 
     box-shadow:
-    0 10px 35px rgba(0,0,0,0.15);
+    0 10px 35px rgba(0,0,0,0.12);
 }
 
 .top-bar {
@@ -167,7 +167,7 @@ body.light .top-bar {
 
     font-size: 13px;
 
-    opacity: 0.7;
+    opacity: 0.75;
 }
 
 .theme-btn {
@@ -250,6 +250,8 @@ body.light .welcome-message {
     word-wrap: break-word;
 
     animation: fadeIn 0.25s ease;
+
+    font-size: 15px;
 }
 
 .user-message {
