@@ -25,8 +25,6 @@ async function sendMessage() {
 
     input.value = "";
 
-    // AUTO SCROLL
-
     chatBox.scrollTop =
         chatBox.scrollHeight;
 
@@ -79,7 +77,7 @@ async function sendMessage() {
         chatBox.scrollHeight;
 }
 
-// ENTER KEY SUPPORT
+// ENTER KEY
 
 document
 .getElementById("user-input")
@@ -91,14 +89,16 @@ document
     }
 });
 
-// THEME TOGGLE
+// THEME BUTTON
 
-function toggleTheme() {
+const themeButton =
+document.getElementById("theme-toggle");
+
+themeButton.addEventListener(
+    "click",
+    () => {
 
     document.body.classList.toggle("light");
-
-    const themeButton =
-        document.querySelector(".theme-btn");
 
     if (
         document.body.classList.contains("light")
@@ -110,4 +110,4 @@ function toggleTheme() {
 
         themeButton.innerText = "🌙";
     }
-}
+});

@@ -167,6 +167,13 @@ body.light .chat-container {
     rgba(255,255,255,0.1);
 
     color: white;
+
+    transition: 0.3s;
+}
+
+.theme-btn:hover {
+
+    transform: scale(1.08);
 }
 
 body.light .theme-btn {
@@ -294,9 +301,14 @@ input::placeholder {
 
 button {
 
-    width: 58px;
-
     border: none;
+
+    cursor: pointer;
+}
+
+.input-container button {
+
+    width: 58px;
 
     border-radius: 16px;
 
@@ -309,12 +321,12 @@ button {
 
     color: white;
 
-    cursor: pointer;
-
     font-size: 22px;
+
+    transition: 0.3s;
 }
 
-button:hover {
+.input-container button:hover {
 
     transform: scale(1.05);
 }

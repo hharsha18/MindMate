@@ -1,92 +1,113 @@
-<!DOCTYPE html>
-<html lang="en">
+async function sendMessage() {
 
-<head>
+    const input =
+        document.getElementById("user-input");
 
-    <meta charset="UTF-8">
+    const message =
+        input.value.trim();
 
-    <meta
-        name="viewport"
-        content="width=device-width, initial-scale=1.0"
-    >
+    if (!message) return;
 
-    <title>MindMate</title>
+    const chatBox =
+        document.getElementById("chat-box");
 
-    <link
-        rel="stylesheet"
-        href="style.css"
-    >
+    // USER MESSAGE
 
-</head>
+    const userDiv =
+        document.createElement("div");
 
-<body>
+    userDiv.className =
+        "message user-message";
 
-    <div class="chat-container">
+    userDiv.innerText = message;
 
-        <div class="top-bar">
+    chatBox.appendChild(userDiv);
 
-            <div class="profile">
+    input.value = "";
 
-                <div class="avatar">
-                    🌊
-                </div>
+    // AUTO SCROLL
 
-                <div>
+    chatBox.scrollTop =
+        chatBox.scrollHeight;
 
-                    <h2>MindMate</h2>
+    // BOT MESSAGE
 
-                    <p>
-                        Online • Wellness AI
-                    </p>
+    const botDiv =
+        document.createElement("div");
 
-                </div>
+    botDiv.className =
+        "message bot-message";
 
-            </div>
+    botDiv.innerText =
+        "Typing...";
 
-            <button
-                class="theme-btn"
-                onclick="toggleTheme()"
-            >
-                🌙
-            </button>
+    chatBox.appendChild(botDiv);
 
-        </div>
+    chatBox.scrollTop =
+        chatBox.scrollHeight;
 
-        <div id="chat-box">
+    try {
 
-            <div class="welcome-message">
+        const response =
+            await fetch("/chat", {
 
-                <h3>
-                    Welcome to MindMate 💙
-                </h3>
+            method: "POST",
 
-                <p>
-                    Talk freely about stress,
-                    anxiety, motivation,
-                    overthinking, or daily life.
-                </p>
+            headers: {
+                "Content-Type":
+                "application/json"
+            },
 
-            </div>
+            body: JSON.stringify({
+                message: message
+            })
+        });
 
-        </div>
+        const data =
+            await response.json();
 
-        <div class="input-container">
+        botDiv.innerText =
+            data.reply;
 
-            <input
-                type="text"
-                id="user-input"
-                placeholder="Type your message..."
-            >
+    } catch (error) {
 
-            <button onclick="sendMessage()">
-                ➤
-            </button>
+        botDiv.innerText =
+            "⚠️ Connection failed.";
+    }
 
-        </div>
+    chatBox.scrollTop =
+        chatBox.scrollHeight;
+}
 
-    </div>
+// ENTER KEY SUPPORT
 
-    <script src="script.js"></script>
+document
+.getElementById("user-input")
+.addEventListener("keydown", function(event) {
 
-</body>
-</html>
+    if (event.key === "Enter") {
+
+        sendMessage();
+    }
+});
+
+// THEME TOGGLE
+
+function toggleTheme() {
+
+    document.body.classList.toggle("light");
+
+    const themeButton =
+        document.querySelector(".theme-btn");
+
+    if (
+        document.body.classList.contains("light")
+    ) {
+
+        themeButton.innerText = "☀️";
+
+    } else {
+
+        themeButton.innerText = "🌙";
+    }
+}
