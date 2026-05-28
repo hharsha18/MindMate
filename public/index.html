@@ -1,21 +1,42 @@
-<div class="container">
+<!DOCTYPE html>
+<html lang="en">
 
-    <h1>MindMate 🌸</h1>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MindMate</title>
 
-    <div id="chat-box"></div>
+    <link rel="stylesheet" href="style.css">
+</head>
 
-    <div class="input-area">
+<body>
 
-        <input
-            type="text"
-            id="user-input"
-            placeholder="Share your thoughts..."
-        >
+    <div class="chat-container">
 
-        <button onclick="sendMessage()">
-            Send
-        </button>
+        <div class="header">
+            <h1>MindMate 🌸</h1>
+            <p>Your AI wellness companion</p>
+        </div>
+
+        <div id="chat-box"></div>
+
+        <div class="input-container">
+
+            <input
+                type="text"
+                id="user-input"
+                placeholder="How are you feeling today?"
+            >
+
+            <button onclick="sendMessage()">
+                Send
+            </button>
+
+        </div>
 
     </div>
 
-</div>
+    <script src="script.js"></script>
+
+</body>
+</html>

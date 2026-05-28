@@ -1,80 +1,113 @@
-body {
+* {
     margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
     font-family: Arial, sans-serif;
-    background: linear-gradient(135deg, #141e30, #243b55);
+    background: linear-gradient(135deg, #141E30, #243B55);
+    height: 100vh;
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100vh;
     color: white;
 }
 
-.container {
-    width: 400px;
-    height: 650px;
+.chat-container {
+    width: 95%;
+    max-width: 450px;
+    height: 90vh;
     background: rgba(255,255,255,0.08);
-    backdrop-filter: blur(10px);
-    border-radius: 20px;
-    padding: 20px;
-    box-shadow: 0 8px 30px rgba(0,0,0,0.3);
+    backdrop-filter: blur(12px);
+    border-radius: 25px;
     display: flex;
     flex-direction: column;
+    overflow: hidden;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.3);
 }
 
-h1 {
+.header {
+    padding: 20px;
     text-align: center;
-    margin-bottom: 15px;
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+}
+
+.header h1 {
+    font-size: 28px;
+    margin-bottom: 5px;
+}
+
+.header p {
+    opacity: 0.8;
+    font-size: 14px;
 }
 
 #chat-box {
     flex: 1;
     overflow-y: auto;
-    padding: 10px;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
 }
 
-.user, .bot {
-    padding: 12px;
-    margin: 10px 0;
-    border-radius: 15px;
+.message {
+    padding: 14px 18px;
+    border-radius: 18px;
     max-width: 80%;
+    line-height: 1.5;
     word-wrap: break-word;
 }
 
-.user {
-    background: #4facfe;
+.user-message {
+    background: #4FACFE;
     align-self: flex-end;
-    margin-left: auto;
+    border-bottom-right-radius: 5px;
 }
 
-.bot {
-    background: rgba(255,255,255,0.15);
+.bot-message {
+    background: rgba(255,255,255,0.12);
     align-self: flex-start;
+    border-bottom-left-radius: 5px;
 }
 
-.input-area {
+.input-container {
     display: flex;
+    padding: 15px;
     gap: 10px;
+    border-top: 1px solid rgba(255,255,255,0.1);
 }
 
 input {
     flex: 1;
-    padding: 12px;
+    padding: 14px;
     border: none;
-    border-radius: 12px;
+    border-radius: 15px;
     outline: none;
     font-size: 15px;
 }
 
 button {
-    padding: 12px 18px;
+    background: #4FACFE;
     border: none;
-    border-radius: 12px;
-    background: #4facfe;
     color: white;
+    padding: 14px 20px;
+    border-radius: 15px;
     cursor: pointer;
     font-weight: bold;
+    transition: 0.3s;
 }
 
 button:hover {
-    opacity: 0.9;
+    transform: scale(1.05);
+}
+
+#chat-box::-webkit-scrollbar {
+    width: 6px;
+}
+
+#chat-box::-webkit-scrollbar-thumb {
+    background: rgba(255,255,255,0.2);
+    border-radius: 10px;
 }

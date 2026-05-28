@@ -3,30 +3,45 @@ async function sendMessage() {
     const input =
         document.getElementById("user-input");
 
-    const message = input.value;
+    const message = input.value.trim();
 
     if (!message) return;
 
     const chatBox =
         document.getElementById("chat-box");
 
+    // USER MESSAGE
+
     const userDiv =
         document.createElement("div");
 
-    userDiv.className = "user";
+    userDiv.classList.add(
+        "message",
+        "user-message"
+    );
+
     userDiv.innerText = message;
 
     chatBox.appendChild(userDiv);
 
+    input.value = "";
+
+    // BOT TYPING
+
     const botDiv =
         document.createElement("div");
 
-    botDiv.className = "bot";
+    botDiv.classList.add(
+        "message",
+        "bot-message"
+    );
+
     botDiv.innerText = "Typing...";
 
     chatBox.appendChild(botDiv);
 
-    input.value = "";
+    chatBox.scrollTop =
+        chatBox.scrollHeight;
 
     try {
 
@@ -36,7 +51,8 @@ async function sendMessage() {
             method: "POST",
 
             headers: {
-                "Content-Type": "application/json"
+                "Content-Type":
+                "application/json"
             },
 
             body: JSON.stringify({
@@ -44,15 +60,18 @@ async function sendMessage() {
             })
         });
 
-        const data = await response.json();
+        const data =
+            await response.json();
 
-        botDiv.innerText = data.reply;
+        botDiv.innerText =
+            data.reply;
 
     } catch (error) {
 
-        console.log(error);
-
         botDiv.innerText =
-            "Frontend error";
+            "⚠️ Failed to connect.";
     }
+
+    chatBox.scrollTop =
+        chatBox.scrollHeight;
 }
