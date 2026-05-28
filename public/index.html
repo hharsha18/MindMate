@@ -1,113 +1,100 @@
-async function sendMessage() {
+<!DOCTYPE html>
+<html lang="en">
 
-    const input =
-        document.getElementById("user-input");
+<head>
 
-    const message =
-        input.value.trim();
+    <meta charset="UTF-8">
 
-    if (!message) return;
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
 
-    const chatBox =
-        document.getElementById("chat-box");
+    <title>MindMate</title>
 
-    // USER MESSAGE
+    <link
+        rel="stylesheet"
+        href="style.css"
+    >
 
-    const userDiv =
-        document.createElement("div");
+</head>
 
-    userDiv.className =
-        "message user-message";
+<body>
 
-    userDiv.innerText = message;
+    <div class="chat-container">
 
-    chatBox.appendChild(userDiv);
+        <!-- TOP BAR -->
 
-    input.value = "";
+        <div class="top-bar">
 
-    // AUTO SCROLL
+            <div class="profile">
 
-    chatBox.scrollTop =
-        chatBox.scrollHeight;
+                <div class="avatar">
+                    🌊
+                </div>
 
-    // BOT MESSAGE
+                <div>
 
-    const botDiv =
-        document.createElement("div");
+                    <h2>MindMate</h2>
 
-    botDiv.className =
-        "message bot-message";
+                    <p>
+                        Online • Wellness AI
+                    </p>
 
-    botDiv.innerText =
-        "Typing...";
+                </div>
 
-    chatBox.appendChild(botDiv);
+            </div>
 
-    chatBox.scrollTop =
-        chatBox.scrollHeight;
+            <button
+                id="theme-toggle"
+                class="theme-btn"
+            >
+                🌙
+            </button>
 
-    try {
+        </div>
 
-        const response =
-            await fetch("/chat", {
+        <!-- CHAT AREA -->
 
-            method: "POST",
+        <div id="chat-box">
 
-            headers: {
-                "Content-Type":
-                "application/json"
-            },
+            <div class="welcome-message">
 
-            body: JSON.stringify({
-                message: message
-            })
-        });
+                <h3>
+                    Welcome to MindMate 💙
+                </h3>
 
-        const data =
-            await response.json();
+                <p>
+                    Talk freely about stress,
+                    anxiety, motivation,
+                    overthinking, or daily life.
+                </p>
 
-        botDiv.innerText =
-            data.reply;
+            </div>
 
-    } catch (error) {
+        </div>
 
-        botDiv.innerText =
-            "⚠️ Connection failed.";
-    }
+        <!-- INPUT -->
 
-    chatBox.scrollTop =
-        chatBox.scrollHeight;
-}
+        <div class="input-container">
 
-// ENTER KEY SUPPORT
+            <input
+                type="text"
+                id="user-input"
+                placeholder="Type your message..."
+            >
 
-document
-.getElementById("user-input")
-.addEventListener("keydown", function(event) {
+            <button
+                onclick="sendMessage()"
+            >
+                ➤
+            </button>
 
-    if (event.key === "Enter") {
+        </div>
 
-        sendMessage();
-    }
-});
+    </div>
 
-// THEME TOGGLE
+    <script src="script.js"></script>
 
-function toggleTheme() {
-
-    document.body.classList.toggle("light");
-
-    const themeButton =
-        document.querySelector(".theme-btn");
-
-    if (
-        document.body.classList.contains("light")
-    ) {
-
-        themeButton.innerText = "☀️";
-
-    } else {
-
-        themeButton.innerText = "🌙";
-    }
-}
+</body>
+</html>
