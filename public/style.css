@@ -18,6 +18,8 @@ body {
 
     overflow: hidden;
 
+    transition: 0.4s;
+
     background:
     linear-gradient(
         rgba(0,20,40,0.55),
@@ -30,9 +32,26 @@ body {
 
     background-position: center;
 
-    background-repeat: no-repeat;
-
     color: white;
+}
+
+/* LIGHT MODE */
+
+body.light {
+
+    background:
+    linear-gradient(
+        rgba(255,255,255,0.55),
+        rgba(220,235,255,0.65)
+    ),
+
+    url("https://images.unsplash.com/photo-1506744038136-46273834b3fb?q=80&w=2070&auto=format&fit=crop");
+
+    background-size: cover;
+
+    background-position: center;
+
+    color: #111;
 }
 
 .chat-container {
@@ -56,8 +75,18 @@ body {
 
     flex-direction: column;
 
+    transition: 0.4s;
+
     box-shadow:
     0 15px 45px rgba(0,0,0,0.45);
+}
+
+body.light .chat-container {
+
+    background:
+    rgba(255,255,255,0.75);
+
+    color: #111;
 }
 
 .top-bar {
@@ -69,6 +98,12 @@ body {
 
     background:
     rgba(255,255,255,0.03);
+
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: center;
 }
 
 .profile {
@@ -106,8 +141,6 @@ body {
 .profile h2 {
 
     font-size: 22px;
-
-    margin-bottom: 3px;
 }
 
 .profile p {
@@ -115,6 +148,30 @@ body {
     font-size: 13px;
 
     opacity: 0.7;
+}
+
+.theme-btn {
+
+    border: none;
+
+    width: 45px;
+    height: 45px;
+
+    border-radius: 50%;
+
+    cursor: pointer;
+
+    font-size: 20px;
+
+    background:
+    rgba(255,255,255,0.1);
+
+    color: white;
+}
+
+body.light .theme-btn {
+
+    color: #111;
 }
 
 #chat-box {
@@ -142,14 +199,6 @@ body {
     border-radius: 18px;
 
     line-height: 1.6;
-
-    border:
-    1px solid rgba(255,255,255,0.05);
-}
-
-.welcome-message h3 {
-
-    margin-bottom: 8px;
 }
 
 .message {
@@ -165,8 +214,6 @@ body {
     word-wrap: break-word;
 
     animation: fadeIn 0.25s ease;
-
-    font-size: 15px;
 }
 
 .user-message {
@@ -193,6 +240,12 @@ body {
     border-bottom-left-radius: 5px;
 }
 
+body.light .bot-message {
+
+    background:
+    rgba(0,0,0,0.08);
+}
+
 .input-container {
 
     display: flex;
@@ -203,9 +256,6 @@ body {
 
     background:
     rgba(255,255,255,0.03);
-
-    border-top:
-    1px solid rgba(255,255,255,0.06);
 }
 
 input {
@@ -228,10 +278,18 @@ input {
     font-size: 15px;
 }
 
+body.light input {
+
+    background:
+    rgba(0,0,0,0.06);
+
+    color: #111;
+}
+
 input::placeholder {
 
     color:
-    rgba(255,255,255,0.5);
+    rgba(255,255,255,0.55);
 }
 
 button {
@@ -254,8 +312,6 @@ button {
     cursor: pointer;
 
     font-size: 22px;
-
-    transition: 0.3s;
 }
 
 button:hover {
