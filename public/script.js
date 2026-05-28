@@ -1,3 +1,12 @@
+// Create a unique ID for each browser
+
+let userId = localStorage.getItem("userId");
+
+if (!userId) {
+    userId = crypto.randomUUID();
+    localStorage.setItem("userId", userId);
+}
+
 async function sendMessage() {
 
     const input =
@@ -19,7 +28,8 @@ async function sendMessage() {
     userDiv.className =
         "message user-message";
 
-    userDiv.innerText = message;
+    userDiv.innerText =
+        message;
 
     chatBox.appendChild(userDiv);
 
@@ -49,17 +59,18 @@ async function sendMessage() {
         const response =
             await fetch("/chat", {
 
-            method: "POST",
+                method: "POST",
 
-            headers: {
-                "Content-Type":
-                "application/json"
-            },
+                headers: {
+                    "Content-Type":
+                        "application/json"
+                },
 
-            body: JSON.stringify({
-                message: message
-            })
-        });
+                body: JSON.stringify({
+                    userId: userId,
+                    message: message
+                })
+            });
 
         const data =
             await response.json();
@@ -68,6 +79,8 @@ async function sendMessage() {
             data.reply;
 
     } catch (error) {
+
+        console.error(error);
 
         botDiv.innerText =
             "⚠️ Connection failed.";
@@ -80,34 +93,45 @@ async function sendMessage() {
 // ENTER KEY
 
 document
-.getElementById("user-input")
-.addEventListener("keydown", function(event) {
+    .getElementById("user-input")
+    .addEventListener(
+        "keydown",
+        function (event) {
 
-    if (event.key === "Enter") {
-
-        sendMessage();
-    }
-});
+            if (event.key === "Enter") {
+                sendMessage();
+            }
+        }
+    );
 
 // THEME BUTTON
 
 const themeButton =
-document.getElementById("theme-toggle");
+    document.getElementById(
+        "theme-toggle"
+    );
 
 themeButton.addEventListener(
     "click",
     () => {
 
-    document.body.classList.toggle("light");
+        document.body.classList.toggle(
+            "light"
+        );
 
-    if (
-        document.body.classList.contains("light")
-    ) {
+        if (
+            document.body.classList.contains(
+                "light"
+            )
+        ) {
 
-        themeButton.innerText = "☀️";
+            themeButton.innerText =
+                "☀️";
 
-    } else {
+        } else {
 
-        themeButton.innerText = "🌙";
+            themeButton.innerText =
+                "🌙";
+        }
     }
-});
+);
