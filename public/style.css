@@ -20,12 +20,12 @@ body {
 
     transition: 0.4s;
 
-    padding: 15px;
+    padding: 10px;
 
     background:
     linear-gradient(
-        rgba(0,20,40,0.45),
-        rgba(0,10,25,0.50)
+        rgba(0,20,40,0.42),
+        rgba(0,10,25,0.45)
     ),
 
     url("https://images.unsplash.com/photo-1506744038136-46273834b3fb?q=80&w=2070&auto=format&fit=crop");
@@ -39,14 +39,14 @@ body {
     color: white;
 }
 
-/* LIGHT THEME */
+/* LIGHT MODE */
 
 body.light {
 
     background:
     linear-gradient(
-        rgba(235,245,255,0.10),
-        rgba(220,235,255,0.14)
+        rgba(235,245,255,0.08),
+        rgba(220,235,255,0.12)
     ),
 
     url("https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?q=80&w=2070&auto=format&fit=crop");
@@ -66,12 +66,12 @@ body.light {
 
     width: 100%;
 
-    max-width: 480px;
+    max-width: 430px;
 
-    height: 92vh;
+    height: 88vh;
 
     background:
-    rgba(8,18,35,0.68);
+    rgba(8,18,35,0.52);
 
     border:
     1px solid rgba(255,255,255,0.10);
@@ -86,33 +86,33 @@ body.light {
 
     transition: 0.4s;
 
-    backdrop-filter: blur(10px);
+    backdrop-filter: blur(8px);
 
     box-shadow:
-    0 15px 45px rgba(0,0,0,0.40);
+    0 15px 45px rgba(0,0,0,0.35);
 }
 
 body.light .chat-container {
 
     background:
-    rgba(255,255,255,0.10);
+    rgba(255,255,255,0.06);
 
     color: #111;
 
-    backdrop-filter: blur(10px);
+    backdrop-filter: blur(8px);
 
     border:
-    1px solid rgba(255,255,255,0.20);
+    1px solid rgba(255,255,255,0.18);
 
     box-shadow:
-    0 10px 35px rgba(0,0,0,0.12);
+    0 10px 35px rgba(0,0,0,0.10);
 }
 
 /* TOP BAR */
 
 .top-bar {
 
-    padding: 18px;
+    padding: 16px;
 
     border-bottom:
     1px solid rgba(255,255,255,0.08);
@@ -141,15 +141,15 @@ body.light .top-bar {
 
     align-items: center;
 
-    gap: 14px;
+    gap: 12px;
 }
 
 .avatar {
 
-    width: 55px;
-    height: 55px;
+    width: 52px;
+    height: 52px;
 
-    min-width: 55px;
+    min-width: 52px;
 
     border-radius: 50%;
 
@@ -166,17 +166,17 @@ body.light .top-bar {
 
     align-items: center;
 
-    font-size: 24px;
+    font-size: 22px;
 }
 
 .profile h2 {
 
-    font-size: 22px;
+    font-size: 21px;
 }
 
 .profile p {
 
-    font-size: 13px;
+    font-size: 12px;
 
     opacity: 0.75;
 }
@@ -187,16 +187,16 @@ body.light .top-bar {
 
     border: none;
 
-    width: 45px;
-    height: 45px;
+    width: 42px;
+    height: 42px;
 
-    min-width: 45px;
+    min-width: 42px;
 
     border-radius: 50%;
 
     cursor: pointer;
 
-    font-size: 20px;
+    font-size: 18px;
 
     background:
     rgba(255,255,255,0.10);
@@ -214,7 +214,7 @@ body.light .top-bar {
 body.light .theme-btn {
 
     background:
-    rgba(255,255,255,0.18);
+    rgba(255,255,255,0.16);
 
     color: #111;
 }
@@ -227,13 +227,13 @@ body.light .theme-btn {
 
     overflow-y: auto;
 
-    padding: 20px;
+    padding: 18px;
 
     display: flex;
 
     flex-direction: column;
 
-    gap: 16px;
+    gap: 14px;
 }
 
 /* WELCOME */
@@ -241,9 +241,9 @@ body.light .theme-btn {
 .welcome-message {
 
     background:
-    rgba(255,255,255,0.06);
+    rgba(255,255,255,0.05);
 
-    padding: 18px;
+    padding: 16px;
 
     border-radius: 18px;
 
@@ -253,7 +253,7 @@ body.light .theme-btn {
 body.light .welcome-message {
 
     background:
-    rgba(255,255,255,0.10);
+    rgba(255,255,255,0.08);
 }
 
 /* MESSAGES */
@@ -262,7 +262,7 @@ body.light .welcome-message {
 
     max-width: 85%;
 
-    padding: 14px 18px;
+    padding: 13px 17px;
 
     border-radius: 18px;
 
@@ -298,7 +298,7 @@ body.light .welcome-message {
     align-self: flex-start;
 
     background:
-    rgba(255,255,255,0.08);
+    rgba(255,255,255,0.05);
 
     border-bottom-left-radius: 5px;
 }
@@ -306,7 +306,7 @@ body.light .welcome-message {
 body.light .bot-message {
 
     background:
-    rgba(255,255,255,0.14);
+    rgba(255,255,255,0.10);
 
     color: #111;
 }
@@ -317,9 +317,9 @@ body.light .bot-message {
 
     display: flex;
 
-    gap: 12px;
+    gap: 10px;
 
-    padding: 18px;
+    padding: 16px;
 
     background:
     rgba(255,255,255,0.03);
@@ -328,7 +328,7 @@ body.light .bot-message {
 body.light .input-container {
 
     background:
-    rgba(255,255,255,0.05);
+    rgba(255,255,255,0.04);
 }
 
 input {
@@ -339,12 +339,12 @@ input {
 
     outline: none;
 
-    padding: 15px;
+    padding: 14px;
 
-    border-radius: 16px;
+    border-radius: 15px;
 
     background:
-    rgba(255,255,255,0.08);
+    rgba(255,255,255,0.07);
 
     color: white;
 
@@ -354,7 +354,7 @@ input {
 body.light input {
 
     background:
-    rgba(255,255,255,0.14);
+    rgba(255,255,255,0.10);
 
     color: #111;
 }
@@ -382,11 +382,11 @@ button {
 
 .input-container button {
 
-    width: 58px;
+    width: 54px;
 
-    min-width: 58px;
+    min-width: 54px;
 
-    border-radius: 16px;
+    border-radius: 15px;
 
     background:
     linear-gradient(
@@ -397,7 +397,7 @@ button {
 
     color: white;
 
-    font-size: 22px;
+    font-size: 20px;
 
     transition: 0.3s;
 }
@@ -411,13 +411,13 @@ button {
 
 #chat-box::-webkit-scrollbar {
 
-    width: 5px;
+    width: 4px;
 }
 
 #chat-box::-webkit-scrollbar-thumb {
 
     background:
-    rgba(255,255,255,0.2);
+    rgba(255,255,255,0.18);
 
     border-radius: 10px;
 }
@@ -452,11 +452,13 @@ button {
 
         width: 100%;
 
-        height: 100vh;
-
         max-width: 100%;
 
+        height: 100vh;
+
         border-radius: 0;
+
+        backdrop-filter: blur(6px);
     }
 
     .top-bar {
@@ -466,18 +468,44 @@ button {
 
     .profile h2 {
 
+        font-size: 19px;
+    }
+
+    .profile p {
+
+        font-size: 11px;
+    }
+
+    .avatar {
+
+        width: 48px;
+        height: 48px;
+
         font-size: 20px;
     }
 
     .message {
 
-        max-width: 92%;
+        max-width: 90%;
 
         font-size: 14px;
+
+        padding: 12px 15px;
     }
 
     input {
 
         font-size: 14px;
+
+        padding: 13px;
+    }
+
+    .input-container button {
+
+        width: 50px;
+
+        min-width: 50px;
+
+        font-size: 18px;
     }
 }
