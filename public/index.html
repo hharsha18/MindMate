@@ -2,20 +2,45 @@
 <html lang="en">
 
 <head>
+
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
     <title>MindMate</title>
 
-    <link rel="stylesheet" href="style.css">
+    <link
+        rel="stylesheet"
+        href="style.css"
+    >
+
 </head>
 
 <body>
 
+    <div class="background-glow"></div>
+
     <div class="chat-container">
 
         <div class="header">
-            <h1>MindMate 🌸</h1>
-            <p>Your AI wellness companion</p>
+
+            <div class="logo">
+                🌸
+            </div>
+
+            <div>
+
+                <h1>MindMate</h1>
+
+                <p>
+                    Your AI Wellness Companion
+                </p>
+
+            </div>
+
         </div>
 
         <div id="chat-box"></div>
@@ -25,11 +50,11 @@
             <input
                 type="text"
                 id="user-input"
-                placeholder="How are you feeling today?"
+                placeholder="Share your thoughts..."
             >
 
             <button onclick="sendMessage()">
-                Send
+                ➤
             </button>
 
         </div>

@@ -10,7 +10,10 @@ app.use(cors());
 app.use(express.json());
 app.use(express.static("public"));
 
-console.log("KEY EXISTS:", !!process.env.GROQ_API_KEY);
+console.log(
+    "KEY EXISTS:",
+    !!process.env.GROQ_API_KEY
+);
 
 const client = new Groq({
     apiKey: process.env.GROQ_API_KEY,
@@ -20,7 +23,11 @@ app.post("/chat", async (req, res) => {
 
     try {
 
-        const userMessage = req.body.message;
+        const userMessage =
+            req.body.message;
+
+        const lowerMessage =
+            userMessage.toLowerCase();
 
         // SAFETY FILTER
 
@@ -33,12 +40,9 @@ app.post("/chat", async (req, res) => {
             "drugs",
             "weapon",
             "murder",
-            "self harm",
-            "terrorist"
+            "terrorist",
+            "self harm"
         ];
-
-        const lowerMessage =
-            userMessage.toLowerCase();
 
         const isBlocked =
             blockedTopics.some(word =>
@@ -49,18 +53,22 @@ app.post("/chat", async (req, res) => {
 
             return res.json({
                 reply:
-                "⚠️ I can't help with harmful or dangerous requests. I can help with wellness, stress management, and positive support instead."
+                "⚠️ I can't help with harmful or dangerous requests. I can support you with mental wellness, stress management, and positive guidance instead."
             });
         }
 
-        console.log("MESSAGE:", userMessage);
+        console.log(
+            "MESSAGE:",
+            userMessage
+        );
 
         // AI RESPONSE
 
         const completion =
             await client.chat.completions.create({
 
-            model: "llama-3.3-70b-versatile",
+            model:
+            "llama-3.3-70b-versatile",
 
             messages: [
 
@@ -68,14 +76,27 @@ app.post("/chat", async (req, res) => {
                     role: "system",
 
                     content: `
-You are MindMate, a friendly mental wellness AI assistant.
+You are MindMate,
+an emotionally supportive AI mental wellness companion.
 
-Rules:
-- Never provide harmful, illegal, violent, suicidal, hacking, poisoning, or dangerous instructions.
+Your goals:
+- Support emotional wellbeing.
+- Respond with empathy, kindness, patience, and emotional understanding.
+- Comfort stressed, anxious, lonely, sad, or overwhelmed users.
+- Encourage healthy coping strategies.
+- Suggest calming activities, journaling, breathing exercises, meditation, hydration, healthy sleep, and self-care habits.
+- Recommend relaxing music when appropriate.
+
+Important safety rules:
+- Never provide harmful, violent, illegal, suicidal, poisoning, hacking, or dangerous instructions.
+- Never encourage self-harm or unsafe behavior.
 - Politely refuse unsafe requests.
 - Encourage positive and healthy behavior.
-- Be supportive and conversational.
-- Keep replies friendly and helpful.
+
+Response style:
+- Sound warm, calm, supportive, and human-like.
+- Keep replies emotionally intelligent.
+- Use comforting and gentle language.
 `
                 },
 
@@ -87,30 +108,92 @@ Rules:
         });
 
         let reply =
-            completion.choices[0].message.content;
+            completion.choices[0]
+            .message.content;
+
+        // MOOD DETECTION
+
+        let mood = null;
+
+        if (
+            lowerMessage.includes("stress") ||
+            lowerMessage.includes("sad") ||
+            lowerMessage.includes("tired") ||
+            lowerMessage.includes("anxiety") ||
+            lowerMessage.includes("panic") ||
+            lowerMessage.includes("lonely") ||
+            lowerMessage.includes("depressed") ||
+            lowerMessage.includes("overwhelmed")
+        ) {
+            mood = "stressed";
+        }
+
+        if (
+            lowerMessage.includes("happy") ||
+            lowerMessage.includes("excited") ||
+            lowerMessage.includes("great")
+        ) {
+            mood = "happy";
+        }
+
+        // WELLNESS SUPPORT
+
+        if (
+            lowerMessage.includes("anxiety") ||
+            lowerMessage.includes("panic")
+        ) {
+
+            reply += `
+
+🌿 Breathing Exercise:
+Inhale for 4 seconds,
+hold for 4 seconds,
+exhale slowly for 6 seconds.
+Repeat this a few times slowly.
+`;
+        }
+
+        if (
+            lowerMessage.includes("sad") ||
+            lowerMessage.includes("lonely")
+        ) {
+
+            reply += `
+
+💙 Remember:
+You do not have to handle everything alone.
+Small steps still matter.
+Take care of yourself today.
+`;
+        }
 
         // MUSIC SUGGESTIONS
 
         const musicSuggestions = {
 
             stressed: {
+
                 english: [
                     "Weightless",
-                    "Perfect"
+                    "Perfect",
+                    "Until I Found You"
                 ],
 
                 hindi: [
                     "Kun Faya Kun",
-                    "Iktara"
+                    "Iktara",
+                    "Kho Gaye Hum Kahan"
                 ],
 
                 kannada: [
                     "Anisuthide",
-                    "Ninnindale"
+                    "Ninnindale",
+                    "Belageddu"
                 ]
             },
 
             happy: {
+
                 english: [
                     "Happy - Pharrell Williams"
                 ],
@@ -125,29 +208,26 @@ Rules:
             }
         };
 
-        let mood = null;
-
         if (
-            lowerMessage.includes("stress") ||
-            lowerMessage.includes("sad") ||
-            lowerMessage.includes("tired")
+            mood &&
+            musicSuggestions[mood]
         ) {
-            mood = "stressed";
-        }
-
-        if (
-            lowerMessage.includes("happy") ||
-            lowerMessage.includes("excited")
-        ) {
-            mood = "happy";
-        }
-
-        if (mood && musicSuggestions[mood]) {
 
             reply += `
 
-🎵 Suggested songs:
-- ${musicSuggestions[mood].english.join("\n- ")}
+🎵 Suggested Songs
+
+English:
+- ${musicSuggestions[mood]
+.english.join("\n- ")}
+
+Hindi:
+- ${musicSuggestions[mood]
+.hindi.join("\n- ")}
+
+Kannada:
+- ${musicSuggestions[mood]
+.kannada.join("\n- ")}
 `;
         }
 
@@ -161,7 +241,8 @@ Rules:
         console.log(error);
 
         res.json({
-            reply: "⚠️ Backend crashed"
+            reply:
+            "⚠️ Backend crashed"
         });
     }
 });

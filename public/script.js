@@ -3,7 +3,8 @@ async function sendMessage() {
     const input =
         document.getElementById("user-input");
 
-    const message = input.value.trim();
+    const message =
+        input.value.trim();
 
     if (!message) return;
 
@@ -25,6 +26,11 @@ async function sendMessage() {
     chatBox.appendChild(userDiv);
 
     input.value = "";
+
+    // AUTO SCROLL
+
+    chatBox.scrollTop =
+        chatBox.scrollHeight;
 
     // BOT TYPING
 
@@ -75,3 +81,15 @@ async function sendMessage() {
     chatBox.scrollTop =
         chatBox.scrollHeight;
 }
+
+// ENTER KEY SUPPORT
+
+document
+    .getElementById("user-input")
+    .addEventListener("keypress", function(event) {
+
+    if (event.key === "Enter") {
+
+        sendMessage();
+    }
+});
