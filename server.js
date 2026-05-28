@@ -19,6 +19,42 @@ const client = new Groq({
     apiKey: process.env.GROQ_API_KEY,
 });
 
+/* MEMORY STORAGE */
+
+let chatHistory = [
+
+    {
+        role: "system",
+
+        content:
+        `
+        You are MindMate,
+        a supportive AI chatbot.
+
+        Prioritize:
+        - mental wellness
+        - empathy
+        - emotional support
+        - motivation
+        - calm communication
+
+        Never provide:
+        - harmful instructions
+        - poisoning advice
+        - self-harm guidance
+        - illegal activities
+        - dangerous weapon instructions
+
+        Keep responses warm,
+        modern,
+        human-like,
+        and supportive.
+        `
+    }
+];
+
+/* CHAT API */
+
 app.post("/chat", async (req, res) => {
 
     try {
@@ -26,10 +62,12 @@ app.post("/chat", async (req, res) => {
         const userMessage =
             req.body.message;
 
-        const lowerMessage =
-            userMessage.toLowerCase();
+        console.log(
+            "MESSAGE:",
+            userMessage
+        );
 
-        // SAFETY FILTER
+        /* SAFETY FILTER */
 
         const blockedTopics = [
             "poison",
@@ -38,11 +76,11 @@ app.post("/chat", async (req, res) => {
             "bomb",
             "hack",
             "drugs",
-            "weapon",
-            "murder",
-            "terrorist",
-            "self harm"
+            "weapon"
         ];
+
+        const lowerMessage =
+            userMessage.toLowerCase();
 
         const isBlocked =
             blockedTopics.some(word =>
@@ -52,184 +90,54 @@ app.post("/chat", async (req, res) => {
         if (isBlocked) {
 
             return res.json({
+
                 reply:
-                "⚠️ I can't help with harmful or dangerous requests. I can support you with mental wellness, stress management, and positive guidance instead."
+                "I can't help with harmful or dangerous requests. If you need help with safety, emotional support, or learning responsibly, I can help with that instead 💙"
             });
         }
 
-        console.log(
-            "MESSAGE:",
-            userMessage
-        );
+        /* STORE USER MESSAGE */
 
-        // AI RESPONSE
+        chatHistory.push({
+
+            role: "user",
+
+            content: userMessage
+        });
+
+        /* LIMIT MEMORY */
+
+        if (chatHistory.length > 20) {
+
+            chatHistory =
+                chatHistory.slice(-20);
+        }
+
+        /* AI RESPONSE */
 
         const completion =
             await client.chat.completions.create({
 
+            messages: chatHistory,
+
             model:
-            "llama-3.3-70b-versatile",
-
-            messages: [
-
-                {
-                    role: "system",
-
-                    content: `
-You are MindMate,
-an emotionally supportive AI mental wellness companion.
-
-Your goals:
-- Support emotional wellbeing.
-- Respond with empathy, kindness, patience, and emotional understanding.
-- Comfort stressed, anxious, lonely, sad, or overwhelmed users.
-- Encourage healthy coping strategies.
-- Suggest calming activities, journaling, breathing exercises, meditation, hydration, healthy sleep, and self-care habits.
-- Recommend relaxing music when appropriate.
-
-Important safety rules:
-- Never provide harmful, violent, illegal, suicidal, poisoning, hacking, or dangerous instructions.
-- Never encourage self-harm or unsafe behavior.
-- Politely refuse unsafe requests.
-- Encourage positive and healthy behavior.
-
-Response style:
-- Sound warm, calm, supportive, and human-like.
-- Keep replies emotionally intelligent.
-- Use comforting and gentle language.
-`
-                },
-
-                {
-                    role: "user",
-                    content: userMessage
-                }
-            ]
+            "llama-3.3-70b-versatile"
         });
 
-        let reply =
-            completion.choices[0]
-            .message.content;
+        const reply =
+            completion
+            .choices[0]
+            .message
+            .content;
 
-        // MOOD DETECTION
+        /* STORE BOT MESSAGE */
 
-        let mood = null;
+        chatHistory.push({
 
-        if (
-            lowerMessage.includes("stress") ||
-            lowerMessage.includes("sad") ||
-            lowerMessage.includes("tired") ||
-            lowerMessage.includes("anxiety") ||
-            lowerMessage.includes("panic") ||
-            lowerMessage.includes("lonely") ||
-            lowerMessage.includes("depressed") ||
-            lowerMessage.includes("overwhelmed")
-        ) {
-            mood = "stressed";
-        }
+            role: "assistant",
 
-        if (
-            lowerMessage.includes("happy") ||
-            lowerMessage.includes("excited") ||
-            lowerMessage.includes("great")
-        ) {
-            mood = "happy";
-        }
-
-        // WELLNESS SUPPORT
-
-        if (
-            lowerMessage.includes("anxiety") ||
-            lowerMessage.includes("panic")
-        ) {
-
-            reply += `
-
-🌿 Breathing Exercise:
-Inhale for 4 seconds,
-hold for 4 seconds,
-exhale slowly for 6 seconds.
-Repeat this a few times slowly.
-`;
-        }
-
-        if (
-            lowerMessage.includes("sad") ||
-            lowerMessage.includes("lonely")
-        ) {
-
-            reply += `
-
-💙 Remember:
-You do not have to handle everything alone.
-Small steps still matter.
-Take care of yourself today.
-`;
-        }
-
-        // MUSIC SUGGESTIONS
-
-        const musicSuggestions = {
-
-            stressed: {
-
-                english: [
-                    "Weightless",
-                    "Perfect",
-                    "Until I Found You"
-                ],
-
-                hindi: [
-                    "Kun Faya Kun",
-                    "Iktara",
-                    "Kho Gaye Hum Kahan"
-                ],
-
-                kannada: [
-                    "Anisuthide",
-                    "Ninnindale",
-                    "Belageddu"
-                ]
-            },
-
-            happy: {
-
-                english: [
-                    "Happy - Pharrell Williams"
-                ],
-
-                hindi: [
-                    "Ilahi"
-                ],
-
-                kannada: [
-                    "Belageddu"
-                ]
-            }
-        };
-
-        if (
-            mood &&
-            musicSuggestions[mood]
-        ) {
-
-            reply += `
-
-🎵 Suggested Songs
-
-English:
-- ${musicSuggestions[mood]
-.english.join("\n- ")}
-
-Hindi:
-- ${musicSuggestions[mood]
-.hindi.join("\n- ")}
-
-Kannada:
-- ${musicSuggestions[mood]
-.kannada.join("\n- ")}
-`;
-        }
+            content: reply
+        });
 
         res.json({
             reply: reply
@@ -241,11 +149,14 @@ Kannada:
         console.log(error);
 
         res.json({
+
             reply:
-            "⚠️ Backend crashed"
+            "⚠️ Something went wrong. Please try again."
         });
     }
 });
+
+/* START SERVER */
 
 app.listen(3000, () => {
 
