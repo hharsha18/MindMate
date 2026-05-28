@@ -16,10 +16,8 @@ async function sendMessage() {
     const userDiv =
         document.createElement("div");
 
-    userDiv.classList.add(
-        "message",
-        "user-message"
-    );
+    userDiv.className =
+        "message user-message";
 
     userDiv.innerText = message;
 
@@ -32,17 +30,16 @@ async function sendMessage() {
     chatBox.scrollTop =
         chatBox.scrollHeight;
 
-    // BOT TYPING
+    // BOT MESSAGE
 
     const botDiv =
         document.createElement("div");
 
-    botDiv.classList.add(
-        "message",
-        "bot-message"
-    );
+    botDiv.className =
+        "message bot-message";
 
-    botDiv.innerText = "Typing...";
+    botDiv.innerText =
+        "Typing...";
 
     chatBox.appendChild(botDiv);
 
@@ -75,7 +72,7 @@ async function sendMessage() {
     } catch (error) {
 
         botDiv.innerText =
-            "⚠️ Failed to connect.";
+            "⚠️ Connection failed.";
     }
 
     chatBox.scrollTop =
@@ -85,11 +82,32 @@ async function sendMessage() {
 // ENTER KEY SUPPORT
 
 document
-    .getElementById("user-input")
-    .addEventListener("keypress", function(event) {
+.getElementById("user-input")
+.addEventListener("keydown", function(event) {
 
     if (event.key === "Enter") {
 
         sendMessage();
     }
 });
+
+// THEME TOGGLE
+
+function toggleTheme() {
+
+    document.body.classList.toggle("light");
+
+    const themeButton =
+        document.querySelector(".theme-btn");
+
+    if (
+        document.body.classList.contains("light")
+    ) {
+
+        themeButton.innerText = "☀️";
+
+    } else {
+
+        themeButton.innerText = "🌙";
+    }
+}
