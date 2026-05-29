@@ -29,8 +29,7 @@ const systemPrompt = {
     role: "system",
 
     content: `
-You are MindMate,
-a supportive AI chatbot.
+You are MindMate, a supportive AI chatbot.
 
 Prioritize:
 - mental wellness
@@ -39,6 +38,14 @@ Prioritize:
 - motivation
 - calm communication
 
+Response style:
+- Keep responses short and natural.
+- Usually reply in 1 to 3 sentences.
+- Avoid long paragraphs.
+- Be warm, friendly, and supportive.
+- Give direct answers.
+- Only provide detailed explanations if the user specifically asks for more information.
+
 Never provide:
 - harmful instructions
 - poisoning advice
@@ -46,10 +53,7 @@ Never provide:
 - illegal activities
 - dangerous weapon instructions
 
-Keep responses warm,
-modern,
-human-like,
-and supportive.
+Keep responses modern, human-like, and supportive.
 `
 };
 
@@ -59,25 +63,19 @@ app.post("/chat", async (req, res) => {
 
     try {
 
-        const { userId, message } =
-            req.body;
+        const { userId, message } = req.body;
 
         if (!message) {
 
             return res.status(400).json({
-                reply:
-                "Message is required"
+                reply: "Message is required"
             });
         }
 
         const currentUserId =
             userId || "anonymous";
 
-        // Create memory for each user
-
-        if (
-            !userChats[currentUserId]
-        ) {
+        if (!userChats[currentUserId]) {
 
             userChats[currentUserId] = [
                 { ...systemPrompt }
@@ -120,7 +118,6 @@ app.post("/chat", async (req, res) => {
         if (isBlocked) {
 
             return res.json({
-
                 reply:
                 "I can't help with harmful or dangerous requests. If you need help with safety, emotional support, or learning responsibly, I can help with that instead 💙"
             });
@@ -129,22 +126,16 @@ app.post("/chat", async (req, res) => {
         /* STORE USER MESSAGE */
 
         chatHistory.push({
-
             role: "user",
-
             content: message
         });
 
         /* LIMIT MEMORY */
 
-        if (
-            chatHistory.length > 20
-        ) {
+        if (chatHistory.length > 20) {
 
             userChats[currentUserId] = [
-
                 chatHistory[0],
-
                 ...chatHistory.slice(-19)
             ];
         }
@@ -154,11 +145,15 @@ app.post("/chat", async (req, res) => {
         const completion =
             await client.chat.completions.create({
 
+                model:
+                "llama-3.3-70b-versatile",
+
                 messages:
                 userChats[currentUserId],
 
-                model:
-                "llama-3.3-70b-versatile"
+                temperature: 0.7,
+
+                max_tokens: 150
             });
 
         const reply =
@@ -186,7 +181,6 @@ app.post("/chat", async (req, res) => {
         console.log(error);
 
         res.status(500).json({
-
             reply:
             "⚠️ Something went wrong. Please try again."
         });
